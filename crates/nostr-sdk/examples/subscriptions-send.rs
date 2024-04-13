@@ -1,5 +1,9 @@
 use nostr_sdk::prelude::*;
-use std::sync::{Arc, Mutex};
+use std::{
+    sync::{Arc, Mutex},
+    thread::sleep,
+    time::Duration,
+};
 use tokio::spawn;
 
 #[tokio::main]
@@ -15,8 +19,8 @@ async fn main() -> Result<()> {
         let public_key = keys.public_key();
 
         let client = Client::new(keys);
-        //client.add_relay("wss://nostr.oxtr.dev").await.unwrap();
-        client.add_relay("wss://relay.damus.io").await.unwrap();
+        client.add_relay("wss://nostr.oxtr.dev").await.unwrap();
+        //client.add_relay("wss://relay.damus.io").await.unwrap();
 
         let subscription = Filter::new()
             .author(public_key)
@@ -47,6 +51,7 @@ async fn main() -> Result<()> {
                     *failed += 1;
                 }
             }
+            sleep(Duration::from_secs(30));
         });
 
         handles.push(handle);
