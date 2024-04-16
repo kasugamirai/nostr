@@ -17,6 +17,7 @@ async fn main() -> Result<()> {
     for i in 0..101 {
         let keys = Keys::generate();
         let public_key = keys.public_key();
+        println!("Public key: {}", public_key.to_bech32()?);
 
         let client = Client::new(keys);
         client.add_relay("wss://nostr.oxtr.dev").await.unwrap();

@@ -13,6 +13,7 @@ async fn main() -> Result<()> {
     let secret_key = SecretKey::from_bech32(BECH32_SK)?;
     let keys = Keys::new(secret_key);
     let public_key = keys.public_key();
+    print!("Public key: {}", public_key.to_bech32()?);
 
     let opts = Options::new().wait_for_send(false);
     let client = ClientBuilder::new().opts(opts).build();
